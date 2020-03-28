@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/haukurhlo18/chat.io/issues"
   },
-  "homepage": "https://github.com/haukurhlo18/chat.io#readme"
+  "homepage": "https://github.com/haukurhlo18/chat.io#readme",
+  "devDependencies": {
+    "css-loader": "^3.4.2",
+    "file-loader": "^6.0.0",
+    "webpack": "^4.42.1"
+  }
 }
