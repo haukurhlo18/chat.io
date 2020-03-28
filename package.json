@@ -2,8 +2,9 @@
   "name": "chat.io",
   "version": "1.0.0",
   "description": "IRC chat service",
-  "main": "src/app.js",
+  "private": true,
   "scripts": {
+    "start": "webpack --config ./webpack.config.js --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,8 +25,12 @@
   },
   "homepage": "https://github.com/haukurhlo18/chat.io#readme",
   "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "babel-loader": "^8.1.0",
     "css-loader": "^3.4.2",
     "file-loader": "^6.0.0",
-    "webpack": "^4.42.1"
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }
