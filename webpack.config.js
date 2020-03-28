@@ -9,10 +9,15 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: 'babel-loader',
+            },
+            {
                 test: /\.css$/,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    'css-loader',
                 ],
             },
             {
@@ -25,11 +30,18 @@ module.exports = {
                                 hash: 'sha512',
                                 digest: 'hex',
                                 name: 'name=[hash].[ext]',
-                            }
+                            },
                         },
                     },
                 ],
             },
+        ],
+    },
+    resolve: {
+        extensions: [
+            '.js',
+            '.less',
+            '.css',
         ],
     },
 };
