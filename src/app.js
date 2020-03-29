@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import IRC from './components/IRC';
 import './styles.css';
 
 ReactDOM.render(
-    <App/>,
+    <IRC/>,
     document.getElementById('app')
 );

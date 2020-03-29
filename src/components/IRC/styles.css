@@ -1,0 +1,27 @@
+
+#irc {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-areas: "rooms chat nicks"
+    "rooms message message";
+    grid-gap: .6rem;
+    grid-template-columns: minmax(10rem, 20rem) auto minmax(10rem, 20rem);
+    grid-template-rows: auto 2rem;
+}
+
+#rooms {
+    grid-area: rooms;
+}
+
+#chat {
+    grid-area: chat;
+}
+
+#nicks {
+    grid-area: nicks;
+}
+
+#message-box {
+    grid-area: message;
+}
