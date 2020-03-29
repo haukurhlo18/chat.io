@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/app.js',
@@ -7,6 +8,12 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: 'chat.io',
+            favicon: 'src/assets/favicon.ico',
+        })
+    ],
     module: {
         rules: [
             {

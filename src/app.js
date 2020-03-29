@@ -14,5 +14,5 @@ ReactDOM.render(
             <Route exact path={'/irc'} component={IRC} />
         </Router>
     </Provider>,
-    document.getElementById('app')
+    document.body.appendChild(document.createElement("div"))
 );
