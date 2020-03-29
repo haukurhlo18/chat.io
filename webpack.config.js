@@ -53,4 +53,11 @@ module.exports = {
             '.css',
         ],
     },
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        watchContentBase: true,
+        compress: true,
+        writeToDisk: true,
+        port: 9000,
+    },
 };
