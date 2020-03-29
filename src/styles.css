@@ -2,6 +2,7 @@
     font-size: 18px;
     font-family: 'Work Sans', sans-serif;
     box-sizing: border-box;
+    --chatio-yellow-color: #ffe548;
 }
 
 html, body {

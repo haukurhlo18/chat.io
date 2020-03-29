@@ -3,8 +3,8 @@ const path = require('path');
 module.exports = {
     entry: './src/app.js',
     output: {
-        filename: 'main.js',
-        path: path.resolve(__dirname, 'dist/js'),
+        filename: 'js/main.js',
+        path: path.resolve(__dirname, 'dist'),
         publicPath: '/',
     },
     module: {
@@ -36,6 +36,7 @@ module.exports = {
                     {
                         loader: 'file-loader',
                         options: {
+                            outputPath: 'images',
                             query: {
                                 hash: 'sha512',
                                 digest: 'hex',

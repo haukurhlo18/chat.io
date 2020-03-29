@@ -1,6 +1,42 @@
 
 #login {
     display: flex;
-    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--chatio-yellow-color);
 }
 
+#login .logo {
+    max-width: 320px;
+}
+
+#login form {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#login form > * {
+    margin: .4rem 0;
+}
+
+#login form label {
+    font-size: .8rem;
+}
+
+#login form label:after {
+    content: ':';
+    margin: 0;
+    padding: .4rem 0;
+}
+
+#login form input {
+    padding: .4rem .6rem;
+}
+
+#login form button {
+    align-self: flex-end;
+}
