@@ -7,7 +7,7 @@
     "rooms message message";
     grid-gap: .6rem;
     grid-template-columns: minmax(10rem, 20rem) auto minmax(10rem, 20rem);
-    grid-template-rows: auto 2rem;
+    grid-template-rows: auto 3rem;
 }
 
 #rooms {

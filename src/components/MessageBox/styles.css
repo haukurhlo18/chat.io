@@ -1,0 +1,13 @@
+
+#message-box {
+    display: grid;
+    grid-template-columns: auto 3rem;
+    grid-gap: .4rem;
+    padding: .4rem;
+}
+
+#message-box input {
+    padding-left: .6rem;
+    padding-right: .6rem;
+}
+
