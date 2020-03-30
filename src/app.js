@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { updateRooms } from './actions/rooms';
+import { updateMessages } from './actions/chat';
 import { Provider } from 'react-redux';
 import irc from "./services/ircService";
 import Login from './components/Login';
@@ -13,6 +14,10 @@ import './styles.css';
 irc.rooms();
 // Update state with emitted roomList
 irc.onRoomListUpdate((data) => store.dispatch(updateRooms(data)));
+
+irc.onChatUpdate((messages, room) => {
+    store.dispatch(updateMessages(messages));
+});
 
 ReactDOM.render(
     <Provider store={store}>

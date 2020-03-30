@@ -74,7 +74,7 @@ onRoomListUpdate.propTypes = {
     callback: PropTypes.func,
 };
 
-const onChatUpdate = (callback) => socket.on('updatechat', (data) => callback(data));
+const onChatUpdate = (callback) => socket.on('updatechat', (room, messages) => callback(messages, room));
 
 onChatUpdate.propTypes = {
     callback: PropTypes.func,
