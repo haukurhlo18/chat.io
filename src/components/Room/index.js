@@ -18,6 +18,7 @@ const Room = ({ room, locked, selectedRoom, join }) => {
         irc.joinRoom(request, (accepted) => {
             if (accepted) {
                 join(room);
+                // ToDo: remove debug console log
                 console.log(`Joined room: ${room}`);
             }
         });
