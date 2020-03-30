@@ -15,9 +15,10 @@ const Room = ({ room, locked, selectedRoom, join }) => {
             request.pass = prompt(`Please enter password for '${room}'`);
         }
 
-        irc.joinRoom(request, (accepted, reason) => {
+        irc.joinRoom(request, (accepted) => {
             if (accepted) {
                 join(room);
+                console.log(`Joined room: ${room}`);
             }
         });
     };
