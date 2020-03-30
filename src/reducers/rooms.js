@@ -1,22 +1,16 @@
 import { RoomsActions } from '../actions/rooms';
 
-const rooms = (state = { isFetching: false, invalidated: false, rooms: [] }, action) => {
+const rooms = (state = { rooms: {}, selectedRoom: null }, action) => {
     switch (action.type) {
-        case RoomsActions.GET_ROOMS:
+        case RoomsActions.UPDATE_ROOMS:
             return {
                 ...state,
-                selected: action.room,
+                rooms: action.rooms,
             };
-        case RoomsActions.RECEIVE:
-        case RoomsActions.REQUEST:
+        case RoomsActions.JOIN_ROOM:
             return {
                 ...state,
-                ...action,
-            };
-        case RoomsActions.INVALIDATE:
-            return {
-                ...state,
-                invalidated: action.didInvalidate,
+                selectedRoom: action.room,
             };
         default:
             return state;

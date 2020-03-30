@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { socket } from '../../services/socketService';
+import irc from '../../services/ircService';
 import { Redirect } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import './styles.css';
@@ -17,7 +17,8 @@ const Login = () => {
             return;
         }
 
-        socket.emit("adduser", nickname, (available) => {
+        irc.addUser(nickname, (available, r) => {
+            console.log(available, r);
             if (available) {
                 setGoToIRC(true);
             } else {
