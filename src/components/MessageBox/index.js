@@ -8,12 +8,18 @@ const MessageBox = ({ selectedRoom }) => {
     const [ message, setMessage ] = useState('');
 
     const send = (e) => {
+        // Prevent form being submitted
         e.preventDefault();
+
+        // If the message is empty or we're not in a room, then we quit early
         if (message === '' || selectedRoom === '') {
             return;
         }
 
+        // Send message
         irc.sendMsg(selectedRoom, message);
+
+        // Clear message box
         setMessage('');
     };
 
