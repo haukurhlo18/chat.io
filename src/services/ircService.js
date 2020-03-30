@@ -71,8 +71,12 @@ kick.defaultProps = {
 const onRoomListUpdate = (callback) => socket.on('roomlist', (data) => callback(data));
 
 onRoomListUpdate.propTypes = {
-    user: PropTypes.string.isRequired,
-    room: PropTypes.string.isRequired,
+    callback: PropTypes.func,
+};
+
+const onChatUpdate = (callback) => socket.on('updatechat', (data) => callback(data));
+
+onChatUpdate.propTypes = {
     callback: PropTypes.func,
 };
 
@@ -86,6 +90,7 @@ const irc = {
     privateMsg,
     kick,
     onRoomListUpdate,
+    onChatUpdate,
 };
 
 export default irc;
