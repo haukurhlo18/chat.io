@@ -1,4 +1,3 @@
-import { socket } from '../services/ircService';
 
 export const RoomsActions = {
     UPDATE_ROOMS: 'UPDATE_ROOMS',

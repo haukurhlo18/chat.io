@@ -1,0 +1,17 @@
+
+.room {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: .6rem .6rem;
+    margin: .2rem;
+    cursor: pointer;
+    border-radius: .2rem;
+    background-color: inherit;
+    transition: background-color 400ms ease;
+}
+
+.room:hover {
+    background-color: #f4f4f4;
+}
+

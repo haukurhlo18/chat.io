@@ -1,18 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Room from "../Room";
 
-class Rooms extends React.Component {
-    render() {
-        const { rooms } = this.props;
-        console.log('yeah', rooms);
-        return (
-            <div id={'rooms'}>
-                { Object.keys(rooms).map(room => (<div key={room}>{room}</div>)) }
-            </div>
-        );
-    }
-}
+const Rooms = ({ rooms }) => {
+    const keys = Object.keys(rooms);
+
+    return (
+        <div id={'rooms'}>
+            { keys.map(room => <Room key={room} room={room} locked={rooms[room].locked} />) }
+        </div>
+    );
+};
 
 Rooms.propTypes = {
     rooms: PropTypes.object.isRequired,
@@ -26,5 +25,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps,
-    null
+    null,
 )(Rooms);
