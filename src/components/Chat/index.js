@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 const Chat = ({ messages }) => {
-    console.log(messages);
 
     const toHumanReadable = (timestamp) => {
         let d = new Date(timestamp);
