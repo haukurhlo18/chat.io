@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { joinRoom } from '../../actions/chat';
-import { room as storageRoom } from '../../services/storageService';
 import irc from "../../services/ircService";
 import './styles.css';
 
@@ -14,6 +13,10 @@ const Room = ({ room, locked, currentRoom, joinRoom }) => {
 
         if (locked) {
             request.pass = prompt(`Please enter password for '${room}'`);
+        }
+
+        if (room === currentRoom) {
+            return;
         }
 
         irc.joinRoom(request, (accepted) => {
@@ -29,12 +32,12 @@ const Room = ({ room, locked, currentRoom, joinRoom }) => {
     let classes = ['room'];
 
     if (room === currentRoom) {
-        classes.push('selected');
+        classes.push('current');
     }
 
     return (
-        <div className={classes.join(' ')} onClick={enter}>
-            <span className={'room_name'}>{room}</span>
+        <div className={ classes.join(' ') } onClick={ enter }>
+            <span className={'room_name'}>{ room }</span>
             <span className={'room_locked'}>{ locked ? '🛑' : '✅' }</span>
         </div>
     );
