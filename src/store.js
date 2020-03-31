@@ -1,5 +1,5 @@
 import { applyMiddleware, createStore } from 'redux';
-import { ChatActions, updateMessages, updateRooms, setNick, joinRoom } from './actions/chat';
+import { ChatActions, updateMessages, updateRooms, setNick, joinRoom, updateRoom } from './actions/chat';
 import { nick as storageNick, room as storageRoom } from './services/storageService';
 import rootReducer from './reducers';
 import irc from './services/ircService';
@@ -41,6 +41,11 @@ irc.onRoomListUpdate((data) => store.dispatch(updateRooms(data)));
 
 irc.onChatUpdate((messages, room) => {
     store.dispatch(updateMessages(messages));
+});
+
+irc.onUsersUpdate( (room, users, ops) => {
+    store.dispatch(updateRoom(room, users, ops));
+    irc.rooms();
 });
 
 const nickname = storageNick();

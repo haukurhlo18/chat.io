@@ -2,6 +2,7 @@
 export const ChatActions = {
     UPDATE_MESSAGES: 'UPDATE_MESSAGES',
     UPDATE_ROOMS: 'UPDATE_ROOMS',
+    UPDATE_ROOM: 'UPDATE_ROOM',
     JOIN_ROOM: 'JOIN_ROOM',
     SET_NICK: 'SET_NICK',
 };
@@ -9,6 +10,13 @@ export const ChatActions = {
 export const updateRooms = (rooms) => ({
     type: ChatActions.UPDATE_ROOMS,
     rooms: rooms,
+});
+
+export const updateRoom = (room, users, ops) => ({
+    type: ChatActions.UPDATE_ROOM,
+    room,
+    users,
+    ops,
 });
 
 export const joinRoom = (room) => ({

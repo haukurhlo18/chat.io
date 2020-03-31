@@ -17,6 +17,12 @@ const chat = (state = { messages: [], nick: '' , rooms: {}, currentRoom: '' }, a
                 ...state,
                 rooms: action.rooms,
             };
+        case ChatActions.UPDATE_ROOM:
+            if (state.rooms[action.room] !== undefined) {
+                state.rooms[action.room].users = action.users;
+                state.rooms[action.room].ops = action.ops;
+            }
+            return state;
         case ChatActions.JOIN_ROOM:
             return {
                 ...state,

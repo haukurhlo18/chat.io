@@ -80,6 +80,12 @@ onChatUpdate.propTypes = {
     callback: PropTypes.func,
 };
 
+const onUsersUpdate = (callback) => socket.on('updateusers', (room, users, ops) => callback(room, users, ops));
+
+onUsersUpdate.propTypes = {
+    callback: PropTypes.func,
+};
+
 const irc = {
     socket,
     addUser,
@@ -91,6 +97,7 @@ const irc = {
     kick,
     onRoomListUpdate,
     onChatUpdate,
+    onUsersUpdate,
 };
 
 export default irc;
