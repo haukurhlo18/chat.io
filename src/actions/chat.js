@@ -13,7 +13,7 @@ export const updateRooms = (rooms) => ({
 
 export const joinRoom = (room) => ({
     type: ChatActions.JOIN_ROOM,
-    room,
+    currentRoom: room,
 });
 
 export const updateMessages = (messages) => ({
