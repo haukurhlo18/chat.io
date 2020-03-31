@@ -19,7 +19,7 @@ Rooms.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        rooms: state.rooms.rooms,
+        rooms: state.chat.rooms,
     }
 };
 

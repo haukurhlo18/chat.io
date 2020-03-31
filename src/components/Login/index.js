@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { setNick } from '../../actions/chat';
 import irc from '../../services/ircService';
-import { Redirect } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import './styles.css';
 
-const Login = () => {
+const Login = ({ setNick }) => {
 
     const [ nickname, setNickname ] = useState('');
     const [ inputError, setInputError ] = useState('');
-    const [ goToIRC, setGoToIRC ] = useState(false);
 
     const login = (e) => {
         e.preventDefault();
@@ -17,10 +17,9 @@ const Login = () => {
             return;
         }
 
-        irc.addUser(nickname, (available, r) => {
-            console.log(available, r);
+        irc.addUser(nickname, (available) => {
             if (available) {
-                setGoToIRC(true);
+                setNick(nickname);
             } else {
                 setInputError(`Nickname '${nickname}' is not available`);
             }
@@ -29,7 +28,6 @@ const Login = () => {
 
     return (
         <div id={'login'}>
-            { goToIRC && <Redirect to={'/irc'} /> }
             <div>
                 <img src={logo} className={'logo'} />
                 <form onSubmit={e => login(e)}>
@@ -43,4 +41,11 @@ const Login = () => {
     );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+    setNick: (room) => dispatch(setNick(room)),
+});
+
+export default connect(
+    null,
+    mapDispatchToProps,
+)(Login);

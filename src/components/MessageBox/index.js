@@ -37,7 +37,7 @@ MessageBox.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        selectedRoom: state.rooms.selectedRoom,
+        selectedRoom: state.chat.selectedRoom,
     }
 };
 

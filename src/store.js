@@ -1,8 +1,57 @@
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import { ChatActions, updateMessages, updateRooms } from './actions/chat';
+import { nick as storageNick, room as storageRoom } from './services/storageService';
 import rootReducer from './reducers';
+import irc from './services/ircService';
+
+const logger = store => next => action => {
+    console.group(action.type);
+    console.info('dispatching', action);
+    let result = next(action);
+    console.log('next state', store.getState());
+    console.groupEnd();
+    return result
+};
+
+const chatMiddleware = store => next => action => {
+    switch (action.type) {
+        case ChatActions.SET_NICK:
+            storageNick(action.nick);
+            return next(action);
+        case ChatActions.JOIN_ROOM:
+            const request = action.room;
+            const room = request.room;
+            irc.joinRoom(request, (accepted) => {
+                if (accepted) {
+                    storageRoom(room);
+                    action.room = room;
+                    console.log(`Joined room: ${room}`);
+                } else {
+                    accepted.type = undefined;
+                    console.log(`Unable to join room: ${room}`);
+                }
+            });
+            return next(action);
+        default:
+            return next(action);
+    }
+};
 
 const store = createStore(
     rootReducer,
+    applyMiddleware(
+        // logger,
+        chatMiddleware,
+    ),
 );
+
+// Emit rooms to socket to trigger roomList update
+irc.rooms();
+// Update state with emitted roomList
+irc.onRoomListUpdate((data) => store.dispatch(updateRooms(data)));
+
+irc.onChatUpdate((messages, room) => {
+    store.dispatch(updateMessages(messages));
+});
 
 export default store;

@@ -5,7 +5,7 @@ import { joinRoom } from '../../actions/rooms';
 import irc from '../../services/ircService';
 import './styles.css';
 
-const Room = ({ room, locked, selectedRoom, join }) => {
+const Room = ({ room, locked, selectedRoom, joinRoom }) => {
     const enter = () => {
         let request = {
             room,
@@ -15,13 +15,7 @@ const Room = ({ room, locked, selectedRoom, join }) => {
             request.pass = prompt(`Please enter password for '${room}'`);
         }
 
-        irc.joinRoom(request, (accepted) => {
-            if (accepted) {
-                join(room);
-                // ToDo: remove debug console log
-                console.log(`Joined room: ${room}`);
-            }
-        });
+        joinRoom(request);
     };
 
     let classes = ['room'];
@@ -42,17 +36,17 @@ Room.propTypes = {
     room: PropTypes.string.isRequired,
     locked: PropTypes.bool.isRequired,
     selectedRoom: PropTypes.string.isRequired,
-    join: PropTypes.func.isRequired,
+    joinRoom: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
     return {
-        selectedRoom: state.rooms.selectedRoom,
+        selectedRoom: state.chat.selectedRoom,
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    join: (room) => dispatch(joinRoom(room)),
+    joinRoom: (room) => dispatch(joinRoom(room)),
 });
 
 export default connect(
