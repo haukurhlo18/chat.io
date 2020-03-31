@@ -53,7 +53,7 @@ if (nickname !== null) {
     irc.addUser(nickname, (available) => {
         if (available) {
             store.dispatch(setNick(nickname));
-            console.log(`Update nick: ${nickname}`);
+            console.log(`Automatically logged in as ${nickname}`);
             const room = storageRoom();
             if (room !== null) {
                 irc.joinRoom(room, (accepted) => {

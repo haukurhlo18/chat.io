@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         nick: state.chat.nick,
     };
 
-    if (currentRoom !== '') {
+    if (currentRoom !== '' && currentRoom in state.chat.rooms) {
         nicks.users = state.chat.rooms[currentRoom].users;
         nicks.ops = state.chat.rooms[currentRoom].ops;
     }
