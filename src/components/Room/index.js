@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { joinRoom } from '../../actions/rooms';
-import irc from '../../services/ircService';
+import { joinRoom } from '../../actions/chat';
 import './styles.css';
 
 const Room = ({ room, locked, selectedRoom, joinRoom }) => {
