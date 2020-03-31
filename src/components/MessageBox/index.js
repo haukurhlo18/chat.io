@@ -23,10 +23,12 @@ const MessageBox = ({ currentRoom }) => {
         setMessage('');
     };
 
+    const disabled = currentRoom === '';
+
     return (
         <form id={'message-box'} onSubmit={e => send(e)}>
-            <input type={'text'} placeholder={'Enter message...'} value={message} onChange={ e => setMessage(e.target.value) } />
-            <button type={'submit'}>Send</button>
+            <input type={'text'} placeholder={'Enter message...'} value={message} onChange={ e => setMessage(e.target.value) } disabled={disabled} />
+            <button type={'submit'} disabled={disabled}>Send</button>
         </form>
     );
 };
