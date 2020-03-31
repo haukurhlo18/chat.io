@@ -15,3 +15,6 @@
     background-color: #f4f4f4;
 }
 
+.room.selected {
+    background-color: #f9f9f9;
+}
