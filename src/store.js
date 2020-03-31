@@ -56,10 +56,10 @@ if (nickname !== null) {
             console.log(`Update nick: ${nickname}`);
             const room = storageRoom();
             if (room !== null) {
-                irc.joinRoom({room}, (accepted) => {
+                irc.joinRoom(room, (accepted) => {
                     if (accepted) {
                         store.dispatch(joinRoom(room));
-                        console.log(`Joined room: ${room}`);
+                        console.log('Joined room:', room);
                     }
                 });
             }

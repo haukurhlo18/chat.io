@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import irc from '../../services/ircService';
 import { connect } from 'react-redux';
-import './styles.css';
 import PropTypes from "prop-types";
+import { joinRoom } from '../../actions/chat';
+import irc from '../../services/ircService';
+import './styles.css';
 
-const MessageBox = ({ currentRoom }) => {
+const MessageBox = ({ currentRoom, joinRoom }) => {
     const [ message, setMessage ] = useState('');
 
     const send = (e) => {
@@ -16,8 +17,38 @@ const MessageBox = ({ currentRoom }) => {
             return;
         }
 
-        // Send message
-        irc.sendMsg(currentRoom, message);
+        let command = null;
+        if (message[0] === '/') {
+            // The beauty of JavaScript; is ugly one liners
+            const args = message.slice(1).split(' ').map(e => e.trim()).filter(e => e !== '');
+
+            if (args.length >= 2 && ['kick', 'ban', 'room'].includes(args[0])) {
+                command = args[0];
+
+                switch (command) {
+                    case 'room':
+                        const roomObj = {
+                            room: args[1],
+                            pass: args[2] ? args[2] : '',
+                        };
+                        irc.joinRoom(roomObj, (accepted) => {
+                            if (accepted) {
+                                joinRoom(roomObj);
+                                console.log(`Created room: ${args[1]}`);
+                            }
+                        });
+                        break;
+                    case 'kick':
+                    default:
+                        break;
+                }
+            }
+        }
+
+        if (!command) {
+            // Send message
+            irc.sendMsg(currentRoom, message);
+        }
 
         // Clear message box
         setMessage('');
@@ -35,15 +66,20 @@ const MessageBox = ({ currentRoom }) => {
 
 MessageBox.propTypes = {
     currentRoom: PropTypes.string.isRequired,
+    joinRoom: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
     return {
-        currentRoom: state.chat.currentRoom,
+        currentRoom: state.chat.currentRoom.room,
     }
 };
 
+const mapDispatchToProps = (dispatch) => ({
+    joinRoom: (room) => dispatch(joinRoom(room)),
+});
+
 export default connect(
     mapStateToProps,
-    null,
+    mapDispatchToProps,
 )(MessageBox);

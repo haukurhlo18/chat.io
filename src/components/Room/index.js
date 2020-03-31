@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { joinRoom, updateMessages } from '../../actions/chat';
+import { clearRoom } from '../../services/storageService';
 import irc from "../../services/ircService";
 import './styles.css';
 
@@ -9,8 +10,9 @@ const Room = ({ room, locked, currentRoom, joinRoom, updateMessages }) => {
     const enter = () => {
         if (room === currentRoom) {
             irc.partRoom(room);
-            joinRoom('');
+            joinRoom({ room: '', pass: '' });
             updateMessages([]);
+            clearRoom();
             return;
         }
 
@@ -22,10 +24,9 @@ const Room = ({ room, locked, currentRoom, joinRoom, updateMessages }) => {
             request.pass = prompt(`Please enter password for '${room}'`);
         }
 
-
         irc.joinRoom(request, (accepted) => {
             if (accepted) {
-                joinRoom(room);
+                joinRoom(request);
                 console.log(`Joined room: ${room}`);
             } else {
                 console.log(`Unable to join room: ${room}`);
@@ -56,7 +57,7 @@ Room.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        currentRoom: state.chat.currentRoom,
+        currentRoom: state.chat.currentRoom.room,
     }
 };
 
