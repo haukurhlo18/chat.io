@@ -1,5 +1,5 @@
 import { applyMiddleware, createStore } from 'redux';
-import { ChatActions, updateMessages, updateRooms } from './actions/chat';
+import { ChatActions, updateMessages, updateRooms, setNick, joinRoom } from './actions/chat';
 import { nick as storageNick, room as storageRoom } from './services/storageService';
 import rootReducer from './reducers';
 import irc from './services/ircService';
@@ -42,5 +42,24 @@ irc.onRoomListUpdate((data) => store.dispatch(updateRooms(data)));
 irc.onChatUpdate((messages, room) => {
     store.dispatch(updateMessages(messages));
 });
+
+const nickname = storageNick();
+if (nickname !== null) {
+    irc.addUser(nickname, (available) => {
+        if (available) {
+            store.dispatch(setNick(nickname));
+            console.log(`Update nick: ${nickname}`);
+            const room = storageRoom();
+            if (room !== null) {
+                irc.joinRoom({room}, (accepted) => {
+                    if (accepted) {
+                        store.dispatch(joinRoom(room));
+                        console.log(`Joined room: ${room}`);
+                    }
+                });
+            }
+        }
+    });
+}
 
 export default store;
