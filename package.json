@@ -4,7 +4,7 @@
   "description": "IRC chat service",
   "private": true,
   "scripts": {
-    "start": "webpack --config ./webpack.config.js --mode development ",
+    "build": "webpack --config ./webpack.config.js --mode production ",
     "start:dev": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
