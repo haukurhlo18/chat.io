@@ -19,18 +19,7 @@ const chatMiddleware = store => next => action => {
             storageNick(action.nick);
             return next(action);
         case ChatActions.JOIN_ROOM:
-            const request = action.room;
-            const room = request.room;
-            irc.joinRoom(request, (accepted) => {
-                if (accepted) {
-                    storageRoom(room);
-                    action.room = room;
-                    console.log(`Joined room: ${room}`);
-                } else {
-                    accepted.type = undefined;
-                    console.log(`Unable to join room: ${room}`);
-                }
-            });
+            storageRoom(action.currentRoom);
             return next(action);
         default:
             return next(action);

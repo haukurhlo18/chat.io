@@ -32,7 +32,7 @@ const MessageBox = ({ currentRoom }) => {
 };
 
 MessageBox.propTypes = {
-    selectedRoom: PropTypes.string.isRequired,
+    currentRoom: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
