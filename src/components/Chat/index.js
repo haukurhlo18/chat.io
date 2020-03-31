@@ -5,9 +5,21 @@ import './styles.css';
 
 const Chat = ({ messages }) => {
     console.log(messages);
+
+    const toHumanReadable = (timestamp) => {
+        let d = new Date(timestamp);
+        return d.getUTCHours() + ':' + d.getUTCMinutes();
+    };
+
     return (
         <div id={'chat'}>
-            Here are the Chat displayed
+            { messages.map((data, i) => (
+                <div key={i} className={'message'}>
+                    <span className={'chat_nick'}>{ data.nick }</span>
+                    <span className={'chat_timestamp'}>{ toHumanReadable(data.timestamp) }</span>
+                    <span className={'chat_message'}>{ data.message }</span>
+                </div>
+            )) }
         </div>
     );
 };

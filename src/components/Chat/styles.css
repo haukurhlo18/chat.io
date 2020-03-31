@@ -1,0 +1,28 @@
+
+#chat {
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+
+}
+
+.chat_nick {
+}
+
+.chat_timestamp {
+    margin: 0 .2rem;
+}
+
+.chat_timestamp:before {
+    content: '(';
+}
+
+.chat_timestamp:after {
+    content: '):';
+}
+
+.chat_message {
+
+}
