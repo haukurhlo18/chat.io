@@ -1,6 +1,6 @@
 import { ChatActions } from '../actions/chat';
 
-const chat = (state = { messages: [], nick: '' , rooms: {}, selectedRoom: '' }, action) => {
+const chat = (state = { messages: [], nick: '' , rooms: {}, currentRoom: '' }, action) => {
     switch (action.type) {
         case ChatActions.UPDATE_MESSAGES:
             return {
@@ -20,7 +20,7 @@ const chat = (state = { messages: [], nick: '' , rooms: {}, selectedRoom: '' }, 
         case ChatActions.JOIN_ROOM:
             return {
                 ...state,
-                selectedRoom: action.room,
+                currentRoom: action.currentRoom,
             };
         default:
             return state;

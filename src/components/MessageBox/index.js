@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './styles.css';
 import PropTypes from "prop-types";
 
-const MessageBox = ({ selectedRoom }) => {
+const MessageBox = ({ currentRoom }) => {
     const [ message, setMessage ] = useState('');
 
     const send = (e) => {
@@ -12,12 +12,12 @@ const MessageBox = ({ selectedRoom }) => {
         e.preventDefault();
 
         // If the message is empty or we're not in a room, then we quit early
-        if (message === '' || selectedRoom === '') {
+        if (message === '' || currentRoom === '') {
             return;
         }
 
         // Send message
-        irc.sendMsg(selectedRoom, message);
+        irc.sendMsg(currentRoom, message);
 
         // Clear message box
         setMessage('');
@@ -37,7 +37,7 @@ MessageBox.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        selectedRoom: state.chat.selectedRoom,
+        currentRoom: state.chat.currentRoom,
     }
 };
 

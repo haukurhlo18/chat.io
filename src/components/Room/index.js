@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { joinRoom } from '../../actions/chat';
 import './styles.css';
 
-const Room = ({ room, locked, selectedRoom, joinRoom }) => {
+const Room = ({ room, locked, currentRoom, joinRoom }) => {
     const enter = () => {
         let request = {
             room,
@@ -19,7 +19,7 @@ const Room = ({ room, locked, selectedRoom, joinRoom }) => {
 
     let classes = ['room'];
 
-    if (room === selectedRoom) {
+    if (room === currentRoom) {
         classes.push('selected');
     }
 
@@ -40,7 +40,7 @@ Room.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        selectedRoom: state.chat.selectedRoom,
+        currentRoom: state.chat.currentRoom,
     }
 };
 
