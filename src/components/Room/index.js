@@ -1,12 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { joinRoom } from '../../actions/chat';
+import { joinRoom, updateMessages } from '../../actions/chat';
 import irc from "../../services/ircService";
 import './styles.css';
 
-const Room = ({ room, locked, currentRoom, joinRoom }) => {
+const Room = ({ room, locked, currentRoom, joinRoom, updateMessages }) => {
     const enter = () => {
+        if (room === currentRoom) {
+            irc.partRoom(room);
+            joinRoom('');
+            updateMessages([]);
+            return;
+        }
+
         let request = {
             room,
         };
@@ -15,9 +22,6 @@ const Room = ({ room, locked, currentRoom, joinRoom }) => {
             request.pass = prompt(`Please enter password for '${room}'`);
         }
 
-        if (room === currentRoom) {
-            return;
-        }
 
         irc.joinRoom(request, (accepted) => {
             if (accepted) {
@@ -38,7 +42,6 @@ const Room = ({ room, locked, currentRoom, joinRoom }) => {
     return (
         <div className={ classes.join(' ') } onClick={ enter }>
             <span className={'room_name'}>{ room }</span>
-            <span className={'room_locked'}>{ locked ? '🛑' : '✅' }</span>
         </div>
     );
 };
@@ -48,6 +51,7 @@ Room.propTypes = {
     locked: PropTypes.bool.isRequired,
     currentRoom: PropTypes.string.isRequired,
     joinRoom: PropTypes.func.isRequired,
+    updateMessages: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -58,6 +62,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     joinRoom: (room) => dispatch(joinRoom(room)),
+    updateMessages: (messages) => dispatch(updateMessages(messages)),
 });
 
 export default connect(
