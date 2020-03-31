@@ -2,36 +2,34 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 
-const Nicks = ({ rooms, currentRoom }) => {
-
-    let nicks = {
-        ops: [],
-        users: [],
-    };
-
-    if (currentRoom !== '') {
-        nicks.ops = Object.keys(rooms[currentRoom].ops);
-        nicks.users = Object.keys(rooms[currentRoom].users);
-    }
+const Nicks = ({ users, ops }) => {
 
     return (
         <div>
-            { nicks.ops.map( nick => <div key={nick} className={'nick op'}>{nick}</div>) }
-            { nicks.users.map( nick => <div key={nick} className={'nick'}>{nick}</div>) }
+            { Object.keys(ops).map( nick => <div key={nick} className={'nick op'}>{nick}</div>) }
+            { Object.keys(users).map( nick => <div key={nick} className={'nick'}>{nick}</div>) }
         </div>
     );
 };
 
 Nicks.propTypes = {
-    rooms: PropTypes.object.isRequired,
-    currentRoom: PropTypes.string.isRequired,
+    users: PropTypes.object.isRequired,
+    ops: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {
-    return {
-        rooms: state.chat.rooms,
-        currentRoom: state.chat.currentRoom,
+    const currentRoom = state.chat.currentRoom;
+    let nicks = {
+        users: {},
+        ops: {},
+    };
+
+    if (currentRoom !== '') {
+        nicks.users = state.chat.rooms[currentRoom].users;
+        nicks.ops = state.chat.rooms[currentRoom].ops;
     }
+
+    return nicks;
 };
 
 export default connect(
