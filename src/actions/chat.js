@@ -26,7 +26,6 @@ export const joinRoom = (room, pass = null) => {
         // if user has already in room
         if (roomExists && (user in rooms[room].ops || user in rooms[room].users)) {
             if (room !== currentRoom) {
-                console.log(rooms[room]);
                 dispatch(joinRoomAction(room));
                 dispatch(updateMessages(messages));
             } else {
@@ -65,6 +64,18 @@ export const updateMessages = (room, messages) => {
         let rooms = state.chat.rooms;
         if (room in rooms) {
             rooms[room].messageHistory = messages;
+            dispatch(updateRooms(rooms));
+        }
+    }
+};
+
+export const updateUsers = (room, users, ops) => {
+    return (dispatch, getState) => {
+        const state = getState();
+        let rooms = state.chat.rooms;
+        if (room in rooms) {
+            rooms[room].ops = ops;
+            rooms[room].users = users;
             dispatch(updateRooms(rooms));
         }
     }
