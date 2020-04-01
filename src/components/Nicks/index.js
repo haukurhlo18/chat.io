@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
+import './styles.css';
 
-const Nicks = ({ users, ops, nick }) => {
+const Nicks = ({ users, ops, you }) => {
 
-    ops = Object.keys(ops).filter(n => n !== nick);
-    users = Object.keys(users).filter(n => n !== nick);
+    ops = Object.keys(ops);
+    users = Object.keys(users);
 
     return (
-        <div>
-            { ops.map( nick => <div key={nick} className={'nick op'}>{nick}</div>) }
-            { users.map( nick => <div key={nick} className={'nick'}>{nick}</div>) }
+        <div id={'nicks'}>
+            { ops.map( nick => <div key={nick} className={ nick === you ? 'nick op you' : 'nick op' }>{nick}</div>) }
+            { users.map( nick => <div key={nick} className={ nick === you ? 'nick you' : 'nick' }>{nick}</div>) }
         </div>
     );
 };
@@ -18,6 +19,7 @@ const Nicks = ({ users, ops, nick }) => {
 Nicks.propTypes = {
     users: PropTypes.object.isRequired,
     ops: PropTypes.object.isRequired,
+    you: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -25,7 +27,7 @@ const mapStateToProps = (state) => {
     let nicks = {
         users: {},
         ops: {},
-        nick: state.chat.nick,
+        you: state.chat.nick,
     };
 
     if (currentRoom !== '' && currentRoom in state.chat.rooms) {

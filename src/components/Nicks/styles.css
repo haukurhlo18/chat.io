@@ -1,0 +1,18 @@
+
+#nicks {
+    display: flex;
+    flex-direction: column;
+}
+
+#nicks .nick {
+    padding: .4rem;
+    margin: .4rem 0;
+}
+
+#nicks .nick.op:before {
+    content: '@';
+}
+
+#nicks .nick.you {
+    color: #999;
+}
