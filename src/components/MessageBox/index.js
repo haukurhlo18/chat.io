@@ -22,7 +22,7 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
             // The beauty of JavaScript; is ugly one liners
             const args = message.slice(1).split(' ').map(e => e.trim()).filter(e => e !== '');
 
-            if (args.length >= 2 && ['kick', 'ban', 'room'].includes(args[0])) {
+            if (args.length >= 2 && ['kick', 'ban', 'room', 'op'].includes(args[0])) {
                 command = args[0];
 
                 switch (command) {
@@ -35,10 +35,29 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
                             if (accepted) {
                                 joinRoom(roomObj);
                                 console.log(`Created room: ${args[1]}`);
+                            } else {
+                                alert(`Unable to join/create room ${args[1]}`);
                             }
                         });
                         break;
                     case 'kick':
+                        break;
+                    case 'op':
+                        irc.op(args[1], currentRoom, (successful) => {
+                            if (successful) {
+                                alert(`${args[1]} has been promoted`);
+                            } else {
+                                alert(`Unable to promote ${args[1]}`);
+                            }
+                        });
+                        break;
+                    case 'deop':
+                        irc.deop(args[1], currentRoom, (successful) => {
+                            if (successful) {
+                                alert(`${args[1]} has been demoted`);
+                            }
+                        });
+                        break;
                     default:
                         break;
                 }

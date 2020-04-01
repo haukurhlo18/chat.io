@@ -59,7 +59,7 @@ if (nickname !== null) {
                 irc.joinRoom(room, (accepted) => {
                     if (accepted) {
                         store.dispatch(joinRoom(room));
-                        console.log('Joined room:', room);
+                        console.log('Joined room:', room.room);
                     }
                 });
             }

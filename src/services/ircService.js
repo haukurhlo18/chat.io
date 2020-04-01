@@ -86,6 +86,30 @@ onUsersUpdate.propTypes = {
     callback: PropTypes.func,
 };
 
+const op = (user, room, callback) => socket.emit('op', {user, room}, callback);
+
+op.propTypes = {
+    user: PropTypes.string.isRequired,
+    room: PropTypes.string.isRequired,
+    callback: PropTypes.func,
+};
+
+op.defaultProps = {
+    callback: () => {},
+};
+
+const deop = (user, room, callback) => socket.emit('deop', {user, room}, callback);
+
+deop.propTypes = {
+    user: PropTypes.string.isRequired,
+    room: PropTypes.string.isRequired,
+    callback: PropTypes.func,
+};
+
+deop.defaultProps = {
+    callback: () => {},
+};
+
 const irc = {
     socket,
     addUser,
@@ -95,6 +119,8 @@ const irc = {
     sendMsg,
     privateMsg,
     kick,
+    op,
+    deop,
     onRoomListUpdate,
     onChatUpdate,
     onUsersUpdate,
