@@ -1,6 +1,6 @@
 import { ChatActions } from '../actions/chat';
 
-const chat = (state = { messages: [], nick: '' , rooms: {}, currentRoom: { room: '', pass: '' } }, action) => {
+const chat = (state = { messages: [], nick: '' , rooms: {}, currentRoom: '' }, action) => {
     switch (action.type) {
         case ChatActions.UPDATE_MESSAGES:
             return {

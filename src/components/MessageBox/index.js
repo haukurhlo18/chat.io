@@ -12,8 +12,8 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
         // Prevent form being submitted
         e.preventDefault();
 
-        // If the message is empty or we're not in a room, then we quit early
-        if (message === '' || currentRoom === '') {
+        // If the message is empty, then we quit early
+        if (message === '') {
             return;
         }
 
@@ -21,24 +21,14 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
         if (message[0] === '/') {
             // The beauty of JavaScript; is ugly one liners
             const args = message.slice(1).split(' ').map(e => e.trim()).filter(e => e !== '');
+            const legalCommands = ['kick', 'ban', 'room', 'op', 'deop'];
 
-            if (args.length >= 2 && ['kick', 'ban', 'room', 'op', 'deop'].includes(args[0])) {
+            if (args.length >= 2 && legalCommands.includes(args[0])) {
                 command = args[0];
 
                 switch (command) {
                     case 'room':
-                        const roomObj = {
-                            room: args[1],
-                            pass: args[2] ? args[2] : '',
-                        };
-                        irc.joinRoom(roomObj, (accepted) => {
-                            if (accepted) {
-                                joinRoom(roomObj);
-                                console.log(`Created room: ${args[1]}`);
-                            } else {
-                                alert(`Unable to join/create room ${args[1]}`);
-                            }
-                        });
+                        joinRoom(args[1], args[2] ? args[2] : null);
                         break;
                     case 'kick':
                         break;
@@ -64,7 +54,7 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
             }
         }
 
-        if (!command) {
+        if (!command && currentRoom !== '') {
             // Send message
             irc.sendMsg(currentRoom, message);
         }
@@ -73,12 +63,10 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
         setMessage('');
     };
 
-    const disabled = currentRoom === '';
-
     return (
         <form id={'message-box'} onSubmit={e => send(e)}>
-            <input type={'text'} placeholder={'Enter message...'} value={message} onChange={ e => setMessage(e.target.value) } disabled={disabled} />
-            <button type={'submit'} disabled={disabled}>Send</button>
+            <input type={'text'} placeholder={'Enter message...'} value={message} onChange={ e => setMessage(e.target.value) } autoFocus={true} />
+            <button type={'submit'}>Send</button>
         </form>
     );
 };
@@ -90,7 +78,7 @@ MessageBox.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        currentRoom: state.chat.currentRoom.room,
+        currentRoom: state.chat.currentRoom,
     }
 };
 

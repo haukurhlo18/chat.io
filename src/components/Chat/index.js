@@ -28,9 +28,8 @@ Chat.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    return {
-        messages: state.chat.messages,
-    }
+    const room = state.chat.currentRoom;
+    return room !== '' ? { messages: state.chat.rooms[room].messageHistory } : { messages: [] };
 };
 
 export default connect(

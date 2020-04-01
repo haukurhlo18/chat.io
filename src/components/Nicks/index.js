@@ -23,7 +23,7 @@ Nicks.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    const currentRoom = state.chat.currentRoom.room;
+    const currentRoom = state.chat.currentRoom;
     let nicks = {
         users: {},
         ops: {},

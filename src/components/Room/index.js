@@ -10,28 +10,13 @@ const Room = ({ room, locked, currentRoom, joinRoom, updateMessages }) => {
     const enter = () => {
         if (room === currentRoom) {
             irc.partRoom(room);
-            joinRoom({ room: '', pass: '' });
             updateMessages([]);
             clearRoom();
             return;
         }
 
-        let request = {
-            room,
-        };
-
-        if (locked) {
-            request.pass = prompt(`Please enter password for '${room}'`);
-        }
-
-        irc.joinRoom(request, (accepted) => {
-            if (accepted) {
-                joinRoom(request);
-                console.log(`Joined room: ${room}`);
-            } else {
-                console.log(`Unable to join room: ${room}`);
-            }
-        });
+        const pass = locked ? prompt(`Please enter password for '${room}'`) : null;
+        joinRoom(room, pass);
     };
 
     let classes = ['room'];
@@ -57,7 +42,7 @@ Room.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        currentRoom: state.chat.currentRoom.room,
+        currentRoom: state.chat.currentRoom,
     }
 };
 
