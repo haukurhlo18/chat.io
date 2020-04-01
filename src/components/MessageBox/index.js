@@ -22,7 +22,7 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
             // The beauty of JavaScript; is ugly one liners
             const args = message.slice(1).split(' ').map(e => e.trim()).filter(e => e !== '');
 
-            if (args.length >= 2 && ['kick', 'ban', 'room', 'op'].includes(args[0])) {
+            if (args.length >= 2 && ['kick', 'ban', 'room', 'op', 'deop'].includes(args[0])) {
                 command = args[0];
 
                 switch (command) {
