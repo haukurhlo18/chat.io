@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
+import { clearRoom } from '../../services/storageService';
 import { joinRoom } from '../../actions/chat';
 import irc from '../../services/ircService';
 import './styles.css';
@@ -21,7 +22,16 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
         if (message[0] === '/') {
             // The beauty of JavaScript; is ugly one liners
             const args = message.slice(1).split(' ').map(e => e.trim()).filter(e => e !== '');
-            const legalCommands = ['kick', 'ban', 'room', 'op', 'deop'];
+            const legalCommands = [
+                'kick',
+                'ban',
+                'unban',
+                'room',
+                'op',
+                'deop',
+                'settopic',
+                'setpass',
+            ];
 
             if (args.length >= 2 && legalCommands.includes(args[0])) {
                 command = args[0];
@@ -31,24 +41,48 @@ const MessageBox = ({ currentRoom, joinRoom }) => {
                         joinRoom(args[1], args[2] ? args[2] : null);
                         break;
                     case 'kick':
+                        if (currentRoom !== '') {
+                            irc.kick(args[1], currentRoom, (successful) => {
+                                if (successful) {
+                                    alert(`${args[1]} has been given the good 'ol boot`);
+                                } else {
+                                    alert(`Unable to kick ${args[1]}`);
+                                }
+                            });
+                        }
                         break;
                     case 'op':
-                        irc.op(args[1], currentRoom, (successful) => {
-                            if (successful) {
-                                alert(`${args[1]} has been promoted`);
-                            } else {
-                                alert(`Unable to promote ${args[1]}`);
-                            }
-                        });
+                        if (currentRoom !== '') {
+                            irc.op(args[1], currentRoom, (successful) => {
+                                if (successful) {
+                                    alert(`${args[1]} has been promoted`);
+                                } else {
+                                    alert(`Unable to promote ${args[1]}`);
+                                }
+                            });
+                        }
                         break;
                     case 'deop':
-                        irc.deop(args[1], currentRoom, (successful) => {
-                            if (successful) {
-                                alert(`${args[1]} has been demoted`);
-                            }
-                        });
+                        if (currentRoom !== '') {
+                            irc.deop(args[1], currentRoom, (successful) => {
+                                if (successful) {
+                                    alert(`${args[1]} has been demoted`);
+                                }
+                            });
+                        }
                         break;
                     default:
+                        break;
+                }
+            }
+
+            if (args.length >= 1 && currentRoom !== '' && ['part', 'removepass'].includes(args[0])) {
+                switch (args[0]) {
+                    case 'part':
+                        irc.partRoom(currentRoom);
+                        clearRoom();
+                        break;
+                    case 'removepass':
                         break;
                 }
             }

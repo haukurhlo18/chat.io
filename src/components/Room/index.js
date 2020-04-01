@@ -10,7 +10,6 @@ const Room = ({ room, locked, currentRoom, joinRoom, updateMessages }) => {
     const enter = () => {
         if (room === currentRoom) {
             irc.partRoom(room);
-            updateMessages([]);
             clearRoom();
             return;
         }
